@@ -70,13 +70,33 @@
 	
 	    getInitialState: function getInitialState() {
 	        return {
-	            cards: ['bacon', 'ipsum', 'dolor', 'amet', 'capicola', 'venison', 'bacon', 'ipsum', 'dolor', 'amet', 'capicola', 'venison']
+	            cards: [{ id: '1', name: 'bacon', visible: false }, { id: '2', name: 'ipsum', visible: false }, { id: '3', name: 'dolor', visible: false }, { id: '4', name: 'amet', visible: false }, { id: '5', name: 'capicola', visible: false }, { id: '6', name: 'venison', visible: false }, { id: '7', name: 'bacon', visible: false }, { id: '8', name: 'ipsum', visible: false }, { id: '9', name: 'dolor', visible: false }, { id: '10', name: 'amet', visible: false }, { id: '11', name: 'capicola', visible: false }, { id: '12', name: 'venison', visible: false }],
+	
+	            visible: false
+	
 	        };
+	    },
+	    showBack: function showBack(e) {
+	        console.log(e.target);
+	        var newCardsState = this.state.cards.slice();
+	        console.log(newCardsState);
+	        newCardsState.forEach(function (card) {
+	            if (e.target.dataset.id === card.id) {
+	                card.visible = true;
+	            }
+	        });
+	
+	        this.setState({
+	            cards: newCardsState
+	        });
 	    },
 	    render: function render() {
 	        var boardLayout = [];
 	        for (var i = 0; i < this.state.cards.length; i += 1) {
-	            boardLayout.push(_react2.default.createElement(Card, { name: this.state.cards[i] }));
+	            boardLayout.push(_react2.default.createElement(Card, { name: this.state.cards[i].name,
+	                visible: this.state.cards[i].visible,
+	                showBack: this.showBack,
+	                id: this.state.cards[i].id }));
 	        }
 	        return _react2.default.createElement(
 	            'div',
@@ -86,52 +106,48 @@
 	    }
 	});
 	
-	var Card = _react2.default.createClass({
-	    displayName: 'Card',
+	var Card = function Card(props) {
+	    //getInitialState: function () {
+	    //    return {
+	    //        visible: false
+	    //    }
+	    //},
+	    //componentDidUpdate(){
+	    //    console.log('updated');
+	    //    var visibles = document.querySelectorAll('.visible');
+	    //    console.log(visibles);
+	    //    if (visibles.length >= 1) {
+	    //        if (visibles[0].textContent === visibles[1].textContent) {
+	    //            console.log('We did it');
+	    //        } else {
+	    //            console.log('nope');
+	    //
+	    //            console.log(ReactDOM.findDOMNode(visibles))
+	    //
+	    //            //visibles.forEach(function(card) {
+	    //            //    card.className= "card back";
+	    //            //});
+	    //        }
+	    //    }
+	    //    console.log(visibles.length);
+	    //},
 	
-	    getInitialState: function getInitialState() {
-	        return {
-	            visible: false
-	        };
-	    },
-	    componentDidUpdate: function componentDidUpdate() {
-	        console.log('updated');
-	        var visibles = document.querySelectorAll('.visible');
-	        console.log(visibles);
-	        if (visibles.length >= 1) {
-	            if (visibles[0].textContent === visibles[1].textContent) {
-	                console.log('We did it');
-	            } else {
-	                console.log('nope');
-	            }
-	        }
-	        console.log(visibles.length);
-	    },
-	
-	    showBack: function showBack() {
-	        this.setState({
-	            visible: true
-	        });
-	    },
-	
-	    render: function render() {
-	        var classes = 'card back' + (this.state.visible ? ' visible' : '');
-	        return _react2.default.createElement(
+	    var classes = 'card back' + (props.visible ? ' visible' : '');
+	    return _react2.default.createElement(
+	        'div',
+	        { className: 'card-container', onClick: props.showBack },
+	        _react2.default.createElement(
 	            'div',
-	            { className: 'card-container', onClick: this.showBack },
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'card front' },
-	                'Front'
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: classes },
-	                this.props.name
-	            )
-	        );
-	    }
-	});
+	            { 'data-id': props.id, className: 'card front' },
+	            'Front'
+	        ),
+	        _react2.default.createElement(
+	            'div',
+	            { className: classes },
+	            props.name
+	        )
+	    );
+	};
 	
 	document.addEventListener('DOMContentLoaded', function () {
 	    _reactDom2.default.render(_react2.default.createElement(Board, null), document.querySelector('.app'));
