@@ -132,19 +132,31 @@
 	    //    console.log(visibles.length);
 	    //},
 	
-	    var classes = 'card back' + (props.visible ? ' visible' : '');
+	    var classes = 'card' + (props.visible ? ' visible' : '');
 	    return _react2.default.createElement(
 	        'div',
 	        { className: 'card-container', onClick: props.showBack },
 	        _react2.default.createElement(
 	            'div',
-	            { 'data-id': props.id, className: 'card front' },
-	            'Front'
-	        ),
-	        _react2.default.createElement(
-	            'div',
 	            { className: classes },
-	            props.name
+	            _react2.default.createElement(
+	                'div',
+	                { 'data-id': props.id, className: 'front' },
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'Front'
+	                )
+	            ),
+	            _react2.default.createElement(
+	                'div',
+	                { className: 'back' },
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    props.name
+	                )
+	            )
 	        )
 	    );
 	};

@@ -89,11 +89,13 @@ var Card = function (props) {
     //},
 
 
-    var classes = 'card back' + (props.visible ? ' visible' : '');
+    var classes = 'card' + (props.visible ? ' visible' : '');
     return (
         <div  className="card-container" onClick={props.showBack}>
-            <div data-id={props.id} className="card front">Front</div>
-            <div className={classes}>{props.name}</div>
+            <div className={classes}>
+                <div data-id={props.id} className="front"><p>Front</p></div>
+                <div className="back"><p>{props.name}</p></div>
+            </div>
         </div>
     )
 };
