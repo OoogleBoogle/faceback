@@ -63,6 +63,29 @@
 	// mini Card componants === to divs...click to reveal thingy
 	// state - visibility
 	
+	'';
+	
+	var Board = _react2.default.createClass({
+	    displayName: 'Board',
+	
+	    getInitialState: function getInitialState() {
+	        return {
+	            cards: ['bacon', 'ipsum', 'dolor', 'amet', 'capicola', 'venison', 'bacon', 'ipsum', 'dolor', 'amet', 'capicola', 'venison']
+	        };
+	    },
+	    render: function render() {
+	        var boardLayout = [];
+	        for (var i = 0; i < this.state.cards.length; i += 1) {
+	            boardLayout.push(_react2.default.createElement(Card, { name: this.state.cards[i] }));
+	        }
+	        return _react2.default.createElement(
+	            'div',
+	            null,
+	            boardLayout
+	        );
+	    }
+	});
+	
 	var Card = _react2.default.createClass({
 	    displayName: 'Card',
 	
@@ -70,6 +93,19 @@
 	        return {
 	            visible: false
 	        };
+	    },
+	    componentDidUpdate: function componentDidUpdate() {
+	        console.log('updated');
+	        var visibles = document.querySelectorAll('.visible');
+	        console.log(visibles);
+	        if (visibles.length >= 1) {
+	            if (visibles[0].textContent === visibles[1].textContent) {
+	                console.log('We did it');
+	            } else {
+	                console.log('nope');
+	            }
+	        }
+	        console.log(visibles.length);
 	    },
 	
 	    showBack: function showBack() {
@@ -91,14 +127,14 @@
 	            _react2.default.createElement(
 	                'div',
 	                { className: classes },
-	                'Word'
+	                this.props.name
 	            )
 	        );
 	    }
 	});
 	
 	document.addEventListener('DOMContentLoaded', function () {
-	    _reactDom2.default.render(_react2.default.createElement(Card, null), document.querySelector('.app'));
+	    _reactDom2.default.render(_react2.default.createElement(Board, null), document.querySelector('.app'));
 	});
 
 /***/ },
